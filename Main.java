@@ -12,6 +12,7 @@ public class Main {
       myList.append(1);
       myList.append(2);
       myList.append(3);
+      myList.print();
       System.out.printf("ArrayList Size => %d\n", myList.getSize());
 
       // Fetching Elements
@@ -20,6 +21,12 @@ public class Main {
 
       // Removing Elements
       myList.removeAt(1);
+      myList.print();
+      System.out.printf("ArrayList Size => %d\n", myList.getSize());
+
+      // Inserting Elements
+      myList.insertAt(1, 200);
+      myList.print();
       System.out.printf("ArrayList Size => %d\n", myList.getSize());
    }
 }

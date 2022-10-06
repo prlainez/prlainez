@@ -32,24 +32,41 @@ public class MyArrayList implements MyList {
     }
     
     public void insertAt(int index, Object o) throws NoSuchElementException {
+      if (null == array || index < 0  || index >= size) { 
+        throw new NoSuchElementException();
+      } else {
+        Object[] tempArray = new Object[array.length];
+
+        for (int i = 0, k = 0; i < size; i++) {
+            if (i == index) {
+              Object indexContent = array[index];
+              tempArray[k++] = o;
+              tempArray[k++] = indexContent;
+            } else {
+              tempArray[k++] = array[i];
+            }
+        }
+
+        array = tempArray; // set array content back
+        size += 1; // reduce size by 1
+      }
     }
     
     public void removeAt(int index) throws NoSuchElementException {
       if (null == array || index < 0  || index >= size) { 
-        //return new NoSuchElementException();
+        throw new NoSuchElementException();
       } else {
-        Object[] tempArray = new Object[size];
+        Object[] tempArray = new Object[array.length];
 
-        for (int i = 0; i < array.length; i++) {
-          for (int j = 0; j < tempArray.length; j++) {
+        for (int i = 0, k = 0; i < size; i++) {
             if (i == index) {
               continue;
             } else {
-              tempArray[j] = array[i];
+              tempArray[k++] = array[i];
             }
-          }
         }
 
+        array = tempArray;
         size -= 1; // reduce size by 1
       }
     }
@@ -59,12 +76,16 @@ public class MyArrayList implements MyList {
       if (index >= 0 && index <= size) {
         return array[index];
       } else {
-        return new NoSuchElementException();
+        throw new NoSuchElementException();
       }
     }
     
     public int getSize(){
       return size < 0 ? 0 : size;
+    }
+
+    public void print() {
+      System.out.println(Arrays.toString(array));
     }
     
     public void makeCapacity (int minCapacity){
