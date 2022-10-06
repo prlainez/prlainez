@@ -31,7 +31,7 @@ public class MyArrayList implements MyList {
 
     // make twice the current capacity
     if (currentCapacity == size) {
-      makeCapacity(currentCapacity*2);
+      makeCapacity(currentCapacity * 2);
     }
 
     if (null != o) {
@@ -46,31 +46,33 @@ public class MyArrayList implements MyList {
   public void insertAt(int index, Object o) throws NoSuchElementException {
     // make twice the current capacity
     if (currentCapacity == size) {
-      makeCapacity(currentCapacity*2);
+      makeCapacity(currentCapacity * 2);
     }
-    
-    if (null == array || index < 0 || index >= size) {
+
+    if (index < 0 || index > size) {
       throw new NoSuchElementException();
-    } else {
-      Object[] tempArray = new Object[array.length];
-
-      for (int i = 0, k = 0; i < size; i++) {
-        if (i == index) {
-          Object indexContent = array[index];
-          tempArray[k++] = o;
-          tempArray[k++] = indexContent;
-        } else {
-          tempArray[k++] = array[i];
-        }
-      }
-
-      array = tempArray; // set array content back
-      size += 1; // reduce size by 1
     }
+
+    Object[] tempArray = new Object[array.length];
+
+    for (int i = 0, k = 0; i < size; i++) {
+      if (i == index) {
+        Object indexContent = array[index];
+        tempArray[k++] = o;
+        tempArray[k++] = indexContent;
+      } else {
+        tempArray[k++] = array[i];
+      }
+    }
+
+    array = tempArray; // set array content back
+    size += 1; // reduce size by 1
+
   }
 
   public void removeAt(int index) throws NoSuchElementException {
-    if (null == array || index < 0 || index >= size) {
+    System.out.printf("\nRemove object at index [%d]\n", index);
+    if (index < 0 || index >= size) {
       throw new NoSuchElementException();
     } else {
       Object[] tempArray = new Object[array.length];
@@ -90,7 +92,7 @@ public class MyArrayList implements MyList {
 
   public Object getAt(int index) throws NoSuchElementException {
     System.out.printf("\nGet object at index [%d]\n", index);
-    if (index >= 0 && index <= size) {
+    if (index >= 0 && index < size) {
       return array[index];
     } else {
       throw new NoSuchElementException();
@@ -102,7 +104,8 @@ public class MyArrayList implements MyList {
   }
 
   public void print() {
-    System.out.println(Arrays.toString(array));
+    System.out.printf(
+        "\n == MyArrayList ==\n Array => %s \n Size => %d\n", Arrays.toString(array), getSize());
   }
 
   public void makeCapacity(int minCapacity) {
