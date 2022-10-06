@@ -1,6 +1,7 @@
 // Complete the implementation of your MyArrayList class in this file
 import java.util.*;
 import java.io.*;
+import java.util.NoSuchElementException;
 
 public class MyArrayList implements MyList {
     // Implement the required fields and methods here
@@ -21,22 +22,49 @@ public class MyArrayList implements MyList {
    */
   
     public void append(Object o){
-       array.add(o);// is it the array or the MyList implemented??
+      if (null != o) {
+        System.out.printf("Append object [%d] at index [%d]\n", o, size);
+        array[size] = o;
+        size +=1;
+      } else {
+        System.out.println("Please send a valid object! \n");
+      }
     }
     
-    public void insertAt(int index, Object o){
+    public void insertAt(int index, Object o) throws NoSuchElementException {
     }
     
-    public void removeAt(int index){
-       array.remove(index);// is it the array or the MyList implemented??
+    public void removeAt(int index) throws NoSuchElementException {
+      if (null == array || index < 0  || index >= size) { 
+        //return new NoSuchElementException();
+      } else {
+        Object[] tempArray = new Object[size];
+
+        for (int i = 0; i < array.length; i++) {
+          for (int j = 0; j < tempArray.length; j++) {
+            if (i == index) {
+              continue;
+            } else {
+              tempArray[j] = array[i];
+            }
+          }
+        }
+
+        size -= 1; // reduce size by 1
+      }
     }
     
-    public Object getAt(int index){
-      return o;
+    public Object getAt(int index) throws NoSuchElementException {
+      System.out.printf("\nGet object at index [%d]\n", index);
+      if (index >= 0 && index <= size) {
+        return array[index];
+      } else {
+        return new NoSuchElementException();
+      }
     }
     
     public int getSize(){
-      return index;
+      return size < 0 ? 0 : size;
     }
     
     public void makeCapacity (int minCapacity){
@@ -66,7 +94,7 @@ public class MyArrayList implements MyList {
         @Override
         public Object next() {
             ++currentIndex;
-            return storage[currentIndex];
+            return array[currentIndex];
         }
 
         @Override
